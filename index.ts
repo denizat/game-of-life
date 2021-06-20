@@ -78,7 +78,20 @@ class Life {
     }
 
     iterate() {
+        function addPerimeter(p: Planet): void {
+            // Add a line of zeros to top and bottom
+            p.forEach(l => {
+                l.unshift(0)
+                l.push(0)
+            })
+            // Add line of zeros to sides
+            let line = p[0]
+            line.forEach(i => i = 0)
+            p.unshift(line)
+            p.push(line)
+        }
         let nextState = this.world.copy()
+        // addPerimeter(nextState)
         this.world.land.forEach((line, x) => {
             line.forEach((thing, y) => {
                 // Thing is alive
@@ -95,6 +108,50 @@ class Life {
             })
             this.showWorld()
         })
+        function removePerimeter(p: Planet): void {
+            // Cut off first column
+            let cut = true
+            p[0].forEach(i => {
+                if (i === 1) {
+                    cut = false
+                }
+            })
+            if (cut) {
+                p.shift()
+            }
+            // Cut off last column
+            cut = true
+            p[p.length - 1].forEach(i => {
+                if (i === 1) {
+                    cut = false
+                }
+            })
+            if (cut) {
+                p.pop()
+            }
+            // Cut off top and bottom
+            let cutTop = true
+            let cutBottom = true
+            for (let i = 0; i < p.length; i++) {
+                if (p[i][0] === 1) {
+                    cutTop = false
+                }
+                if (p[i][p[i].length - 1] === 1) {
+                    cutBottom = false
+                }
+            }
+            if (cutTop) {
+                for (let i = 0; i < p.length; i++) {
+                    p[i].shift()
+                }
+            }
+            if (cutBottom) {
+                for (let i = 0; i < p.length; i++) {
+                    p[i].pop()
+                }
+            }
+        }
+        // removePerimeter(nextState)
         this.world.land = nextState
     }
 
@@ -107,12 +164,12 @@ class Life {
     }
 }
 
-let a = new Life(10)
+let a = new Life(35)
 a.randomize()
 
 let t = () => setTimeout(() => {
     a.iterate()
     t()
-}, 150)
+}, 20)
 
 t()
