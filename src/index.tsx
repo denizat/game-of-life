@@ -23,7 +23,7 @@ class App extends React.Component<{}, { land: Land, iterator: NodeJS.Timeout | u
 
     render() {
         return (
-            <div className="bg-gray-900 h-screen text-white overflow-y-scroll">
+            <div className="bg-gray-900 h-screen text-white overflow-y-auto">
                 <div className="bg-gray-500 p-5 w-max">{this.state.land.map(
                     (v, r) => {
                         return (<div className="flex flex-row" key={r}>{v.map(
