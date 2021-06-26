@@ -10,6 +10,7 @@ function sleep(ms: any) {
 class App extends React.Component<{}, { land: Land, iterator: NodeJS.Timeout | undefined }> {
     life: Life
     max = 30
+    iterationSpeed: number = 100
     constructor({ }) {
         super({})
         this.life = new Life(this.max)
@@ -56,7 +57,7 @@ class App extends React.Component<{}, { land: Land, iterator: NodeJS.Timeout | u
                                 iterator: setInterval(() => {
                                     this.life.iterate();
                                     this.setState({ land: this.life.land })
-                                }, 100)
+                                }, this.iterationSpeed)
                             })
                         }
                     }
@@ -70,6 +71,9 @@ class App extends React.Component<{}, { land: Land, iterator: NodeJS.Timeout | u
                             }
 
                         }>Step</button> : null}
+                    {!this.state.iterator ? <input type="range" min="10" max="1000" defaultValue={this.iterationSpeed} onChange={e => {
+                        this.iterationSpeed = parseInt(e.target.value)
+                    }} /> : null}
                 </div>
             </div >
         )
