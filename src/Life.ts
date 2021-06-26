@@ -78,4 +78,14 @@ export class Life {
         this.land = nextState
     }
 
+    clear() {
+        for (let i = 0; i < this.land.length; i++) {
+            for (let k = 0; k < this.land[i].length; k++) {
+                this.land[i][k] = 0
+
+            }
+
+        }
+    }
+
 }
